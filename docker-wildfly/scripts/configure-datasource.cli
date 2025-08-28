@@ -1,0 +1,23 @@
+embed-server --std-out=echo
+
+
+/subsystem=datasources/jdbc-driver=mysql:add(
+    driver-name=mysql,
+    driver-module-name=com.mysql,
+    driver-class-name=com.mysql.cj.jdbc.Driver
+)
+
+data-source add \
+    --name=fin-query \
+    --jndi-name=java:/fin-query \
+    --driver-name=mysql \
+    --connection-url=jdbc:mysql://mysql1:3306/fin-query \
+    --user-name=root \
+    --password=mysecretpass \
+    --use-ccm=false \
+    --max-pool-size=20 \
+    --blocking-timeout-wait-millis=5000 \
+    --enabled=true
+    
+:reload
+stop-embedded-server
